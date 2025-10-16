@@ -43,14 +43,14 @@ import { env } from "process";
 
   // On Demand Serving Mode
   const servingMode: models.OnDemandServingMode = {
-      modelId: process.env.TF_VAR_genai_cohere_model,
+      modelId: env.TF_VAR_genai_cohere_model,
       servingType: "ON_DEMAND",
   };
 
   // Chat Details
   const chatRequest: requests.ChatRequest = {
     chatDetails: {
-      compartmentId: process.env.TF_VAR_compartment_ocid,
+      compartmentId: env.TF_VAR_compartment_ocid,
       servingMode: servingMode,
       chatRequest: {
         message: "Add 2 and 3",
@@ -91,3 +91,52 @@ import { env } from "process";
 
 })();
 
+/* 
+Sample response
+
+{
+  "chatResult": {
+    "modelId": "cohere.command-a-03-2025",
+    "modelVersion": "1.0",
+    "chatResponse": {
+      "apiFormat": "COHERE",
+      "text": "I will add 2 and 3 using the add tool.",
+      "chatHistory": [
+        {
+          "role": "USER",
+          "message": "Add 2 and 3"
+        },
+        {
+          "role": "CHATBOT",
+          "message": "I will add 2 and 3 using the add tool.",
+          "toolCalls": [
+            {
+              "name": "add",
+              "parameters": {
+                "num1": "2",
+                "num2": "3"
+              }
+            }
+          ]
+        }
+      ],
+      "finishReason": "COMPLETE",
+      "toolCalls": [
+        {
+          "name": "add",
+          "parameters": {
+            "num1": "2",
+            "num2": "3"
+          }
+        }
+      ],
+      "usage": {
+        "completionTokens": 25,
+        "promptTokens": 19,
+        "totalTokens": 44
+      }
+    }
+  },
+  "opcRequestId": "1694F401AAD2-11F0-B6EE-317F28C66/63EDDCD4F7DC14F19C4286798F91B416/3F0748FA8C3B59BA1A0BEEA50F0B01D3"
+}
+*/

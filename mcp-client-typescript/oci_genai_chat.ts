@@ -72,3 +72,33 @@ import { env } from "process";
   console.log(JSON.stringify(chatResponse, null, 2));
 })();
 
+/* 
+Sample response
+{
+  "chatResult": {
+    "modelId": "cohere.command-a-03-2025",
+    "modelVersion": "1.0",
+    "chatResponse": {
+      "apiFormat": "COHERE",
+      "text": "Why don't skeletons fight each other?\n\nBecause they don't have the guts!",
+      "chatHistory": [
+        {
+          "role": "USER",
+          "message": "Tell a joke"
+        },
+        {
+          "role": "CHATBOT",
+          "message": "Why don't skeletons fight each other?\n\nBecause they don't have the guts!"
+        }
+      ],
+      "finishReason": "COMPLETE",
+      "usage": {
+        "completionTokens": 18,
+        "promptTokens": 3,
+        "totalTokens": 21
+      }
+    }
+  },
+  "opcRequestId": "10A1F931AAD2-11F0-B41C-BFDFD87DA/E3EC7DAD0F39CAF093F8C408BB6D5E68/AC8075856B86F941D8E757A5A945C428"
+}
+*/

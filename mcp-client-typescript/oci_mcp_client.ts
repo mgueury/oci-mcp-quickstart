@@ -16,18 +16,21 @@ const servingMode: models.OnDemandServingMode = {
 
 class MCPClient {
   private mcp: Client;
-  private llm: GenerativeAiInferenceClient;
+  private llm: GenerativeAiInferenceClient = null;
   private transport: StdioClientTransport | null = null;
   private tools: Object[] = [];
 
-  async constructor() {
+  constructor() {
+    this.mcp = new Client({ name: "mcp-client-cli", version: "1.0.0" });
+  }
+
+  async initLLM() {
     const provider = await new InstancePrincipalsAuthenticationDetailsProviderBuilder().build();
     this.llm = new GenerativeAiInferenceClient({
         authenticationDetailsProvider: provider,
       }
     );
     this.llm.endpoint = "https://inference.generativeai."+env.TF_VAR_region+".oci.oraclecloud.com";
-    this.mcp = new Client({ name: "mcp-client-cli", version: "1.0.0" });
   }
 
   async connectToServer(serverScriptPath: string) {
@@ -177,6 +180,7 @@ async function main() {
   }
   const mcpClient = new MCPClient();
   try {
+    await mcpClient.initLLM();
     await mcpClient.connectToServer(process.argv[2]);
     await mcpClient.chatLoop();
   } finally {

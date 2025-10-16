@@ -38,8 +38,8 @@ import { env } from "process";
   );
 
   // Sets the endpoint of the service.
-  client.region = env.TF_VAR_region;
-  client.endpoint = "https://inference.generativeai."+client.region+".oci.oraclecloud.com";
+  // client.region = env.TF_VAR_region;
+  client.endpoint = "https://inference.generativeai."+env.TF_VAR_region+".oci.oraclecloud.com";
 
   // On Demand Serving Mode
   const servingMode: models.OnDemandServingMode = {

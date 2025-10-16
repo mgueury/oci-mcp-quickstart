@@ -25,7 +25,7 @@ import {
   InstancePrincipalsAuthenticationDetailsProviderBuilder,
   NoRetryConfigurationDetails
 } from "oci-common";
-import { env } from process;
+import { env } from "process";
 
 (async () => {
   // Configuring the AuthenticationDetailsProvider. It's assuming there is a default OCI config file "~/.oci/config", and

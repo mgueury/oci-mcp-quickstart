@@ -69,8 +69,6 @@ import { env } from "process";
   const chatResponse = await client.chat(chatRequest);
 
   // Print chat response
-  console.log("**************************Chat Response**************************");
-  console.log(JSON.stringify(chatResponse));
-
+  console.log(JSON.stringify(chatResponse, null, 2));
 })();
 

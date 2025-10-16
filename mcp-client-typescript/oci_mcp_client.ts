@@ -21,7 +21,7 @@ class MCPClient {
   private tools: Object[] = [];
 
   constructor() {
-    const provider = await new InstancePrincipalsAuthenticationDetailsProviderBuilder().build();
+    const provider = new InstancePrincipalsAuthenticationDetailsProviderBuilder().build();
     this.llm = new GenerativeAiInferenceClient({
         authenticationDetailsProvider: provider,
       }

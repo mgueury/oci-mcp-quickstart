@@ -25,7 +25,7 @@ import {
   InstancePrincipalsAuthenticationDetailsProviderBuilder,
   NoRetryConfigurationDetails
 } from "oci-common";
-import process;
+import { env } from process;
 
 (async () => {
   // Configuring the AuthenticationDetailsProvider. It's assuming there is a default OCI config file "~/.oci/config", and
@@ -38,7 +38,7 @@ import process;
   );
 
   // Sets the endpoint of the service.
-  client.region = process.env.TF_VAR_region;
+  client.region = env.TF_VAR_region;
   client.endpoint = "https://inference.generativeai."+client.region+".oci.oraclecloud.com";
 
   // On Demand Serving Mode

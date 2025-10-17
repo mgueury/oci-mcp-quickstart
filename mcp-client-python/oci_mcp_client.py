@@ -68,7 +68,7 @@ class MCPClient:
                 if tool.get("input_schema"):
                     for key, value in tool["input_schema"]["properties"].items():
                         # Access key and value
-                        print(f"Param: {key}: {value}")
+                        self.debug( f"Param: {key}: {value}" )
                         params[key]= {
                             "description": key,
                             "type": value["type"],

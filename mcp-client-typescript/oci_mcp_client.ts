@@ -171,9 +171,13 @@ class MCPClient {
         if (message.toLowerCase() === "quit") {
           break;
         }
+        console.log("\n" + response);        
         const response = await this.processQuery(message);
         console.log("\n" + response);
       }
+    } catch (e) {
+      console.log("Error: ", e);
+      console.log(e.stack);
     } finally {
       rl.close();
     }

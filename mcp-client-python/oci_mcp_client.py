@@ -60,6 +60,7 @@ class MCPClient:
             print( "tools:" + str(tools) )
             chat_tools = []
             for tool in tools:
+               print( "tool:" + str(tool) )               
                chat_tools.append( 
                    { 
                        "name": tool.name, 

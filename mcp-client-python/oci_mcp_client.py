@@ -159,17 +159,6 @@ class MCPClient:
                     })
                 if hasattr(result.content[0], 'text') and result.content[0].text:  
                     result_text = result.content[0].text
-                    chat_history.append({
-                        "role": "USER", 
-                        "content": result_text
-                    })
-
-                    # Get next response from Claude
-                    response = self.llm_chat(
-                        query=result_text, 
-                        chat_history=chat_history,
-                        tools=None
-                    )
                     final_text.append(result_text)
 
         return "\n".join(final_text)

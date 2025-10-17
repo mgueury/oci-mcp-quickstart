@@ -69,12 +69,13 @@ class MCPClient {
         console.log( "tool.inputSchema", JSON.stringify(tool.inputSchema) );  
         var tool_schema = tool.inputSchema.properties;
         console.log( "tool_schema", JSON.stringify(tool_schema) );  
-        var params = tool.inputSchema.properties.map((p) => {
-            return {
-              type: p.type,
-              description: p.name,
+        var params = {}
+        Object.keys(tool_schema).forEach(function(key,index) {
+            params[key] = {
+              type: tool_schema[key].type,
+              description: tool_schema[key].name,
               isRequired: false
-            };
+            }
         });
         console.log( "tool.inputSchema", JSON.stringify(params) );      
         return {

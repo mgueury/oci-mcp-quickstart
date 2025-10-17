@@ -19,7 +19,7 @@ class MCPClient {
   }
 
   debug(s) {
-    // console.log(s);
+    console.log(s);
   }
 
   async initLLM() {
@@ -33,10 +33,12 @@ class MCPClient {
   async connectToServer(serverPath) {
     try {
       if (serverPath.startsWith('http')) {
+        this.debug("streamableHTTP");
         const url = new URL(serverPath);
         this.transport = new streamableHTTP.StreamableHTTPClientTransport(url);
         await this.mcp.connect(this.transport);
       } else {
+        this.debug("stdio");
         const isJs = serverPath.endsWith(".js");
         const isPy = serverPath.endsWith(".py");
         if (!isJs && !isPy) {

@@ -107,7 +107,7 @@ class MCPClient:
             "input_schema": tool.inputSchema
         } for tool in response.tools]
 
-        response = this.llm_chat(
+        response = self.llm_chat(
             messages=messages,
             tools=available_tools
         )

@@ -24,6 +24,10 @@ class MCPClient {
     this.mcp = new Client({ name: "mcp-client-cli", version: "1.0.0" });
   }
 
+  debug( s: string ) {
+    console.log( s ); 
+  }
+
   async initLLM() {
     const provider = await new InstancePrincipalsAuthenticationDetailsProviderBuilder().build();
     this.llm = new GenerativeAiInferenceClient({
@@ -58,17 +62,17 @@ class MCPClient {
         args: [serverScriptPath],
       });
       this.mcp.connect(this.transport);
-      console.log("before ListTools"); 
+      this.debug( "before ListTools" ); 
       await new Promise(r => setTimeout(r, 2000));
 
       // List available tools
       const toolsResult = await this.mcp.listTools();
 
-      console.log( "toolsResult", JSON.stringify(toolsResult) );      
+      this.debug( "toolsResult " + JSON.stringify(toolsResult) );      
       this.tools = toolsResult.tools.map((tool) => {
-        console.log( "tool.inputSchema", JSON.stringify(tool.inputSchema) );  
+        this.debug( "tool.inputSchema: " + JSON.stringify(tool.inputSchema) );  
         var tool_schema = tool.inputSchema.properties;
-        console.log( "tool_schema", JSON.stringify(tool_schema) );  
+        this.debug( "tool_schema: " + JSON.stringify(tool_schema) );  
         var params = {}
         Object.keys(tool_schema).forEach(function(key,index) {
             params[key] = {
@@ -77,14 +81,14 @@ class MCPClient {
               isRequired: false
             }
         });
-        console.log( "tool.inputSchema", JSON.stringify(params) );      
+        this.debug( "tool.inputSchema " + JSON.stringify(params) );      
         return {
           name: tool.name,
           description: tool.description,
           parameterDefinitions: params,
         };
       });
-      console.log( "this.tools", JSON.stringify(this.tools) );  
+      this.debug( "this.tools: " + JSON.stringify(this.tools) );  
       console.log(
         "Connected to server with tools:",
         this.tools.map(({ name }) => name),
@@ -117,7 +121,7 @@ class MCPClient {
         },
         retryConfiguration: NoRetryConfigurationDetails
     };
-    console.log( "chatRequest", JSON.stringify(chatRequest) );    
+    this.debug( "chatRequest: " + JSON.stringify(chatRequest) );    
     const response = await this.llm.chat(chatRequest);
     const messages: Object[] = [
       {
@@ -125,6 +129,7 @@ class MCPClient {
         content: query,
       },
     ];    
+    this.debug( "response: " + JSON.stringify(response) );   
 
     // Process response and handle tool calls
     const finalText = [];

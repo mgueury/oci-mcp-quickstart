@@ -1,8 +1,8 @@
 const oci_genai = require("oci-generativeaiinference");
 const oci_common = require("oci-common");
 const mcp_client = require("@modelcontextprotocol/sdk/client/index.js");
-const StdioClientTransport = require("@modelcontextprotocol/sdk/client/stdio.js");
-const StreamableHTTPClientTransport = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
+const stdio = require("@modelcontextprotocol/sdk/client/stdio.js");
+const streamableHttp = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
 const readline = require("readline/promises");
 
 const servingMode = {
@@ -34,7 +34,7 @@ class MCPClient {
     try {
       if (serverPath.startsWith('http')) {
         const url = new URL(serverPath);
-        this.transport = new StreamableHTTPClientTransport(url);
+        this.transport = new streamableHTTP.StreamableHTTPClientTransport(url);
         await this.mcp.connect(this.transport);
       } else {
         const isJs = serverPath.endsWith(".js");
@@ -48,7 +48,7 @@ class MCPClient {
             : "python3.12"
           : process.execPath;
 
-        this.transport = new StdioClientTransport({
+        this.transport = new stdio.StdioClientTransport({
           command,
           args: [serverPath],
         });

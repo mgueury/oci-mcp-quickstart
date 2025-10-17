@@ -150,6 +150,7 @@ class MCPClient {
           name: toolName,
           arguments: toolArgs,
         });
+        this.debug( "result: " + JSON.stringify(result) );           
         finalText.push(`[Calling tool done]`);
         this.debug( "result: " + JSON.stringify(result) );   
         finalText.push(result.content);

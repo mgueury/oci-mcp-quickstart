@@ -123,20 +123,21 @@ class MCPClient {
     };
     this.debug( "chatRequest: " + JSON.stringify(chatRequest) );    
     const response = await this.llm.chat(chatRequest);
+    const chatResponse = response.chatResult.chatResponse;
     const messages: Object[] = [
       {
         role: "user",
         content: query,
       },
     ];    
-    this.debug( "response: " + JSON.stringify(response) );   
+    this.debug( "chatResponse: " + JSON.stringify(chatResponse) );   
 
     // Process response and handle tool calls
     const finalText = [];
 
-    finalText.push(response.text);
+    finalText.push(chatResponse.text);
     if ( response.toolCalls ) {
-      for (const toolCall of response.toolCalls) { 
+      for (const toolCall of chatResponse.toolCalls) { 
         console.log(toolCall); 
         // Execute tool call
         const toolName = toolCall.name;

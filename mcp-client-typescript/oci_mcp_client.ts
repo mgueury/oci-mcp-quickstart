@@ -25,7 +25,7 @@ class MCPClient {
   }
 
   debug( s: string ) {
-    console.log( s ); 
+    // console.log( s ); 
   }
 
   async initLLM() {

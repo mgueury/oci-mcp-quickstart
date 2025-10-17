@@ -58,6 +58,8 @@ class MCPClient {
         args: [serverScriptPath],
       });
       this.mcp.connect(this.transport);
+      console.log("before ListTools"); 
+      await new Promise(r => setTimeout(r, 2000));
 
       // List available tools
       const toolsResult = await this.mcp.listTools();

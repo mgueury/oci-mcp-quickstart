@@ -136,7 +136,7 @@ class MCPClient {
     const finalText = [];
 
     finalText.push(chatResponse.text);
-    if ( response.toolCalls ) {
+    if ( chatResponse.toolCalls ) {
       for (const toolCall of chatResponse.toolCalls) { 
         console.log(toolCall); 
         // Execute tool call

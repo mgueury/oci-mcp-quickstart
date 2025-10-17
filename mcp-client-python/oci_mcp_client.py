@@ -106,6 +106,7 @@ class MCPClient:
         } for tool in response.tools]
 
         response = self.llm_chat(
+            self,
             messages,
             available_tools
         )
@@ -137,6 +138,7 @@ class MCPClient:
 
                 # Get next response from Claude
                 response = self.llm_chat(
+                    self,
                     messages, 
                     None
                 )

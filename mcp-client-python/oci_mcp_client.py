@@ -63,9 +63,9 @@ class MCPClient:
                print( "tool:" + str(tool) )               
                chat_tools.append( 
                    { 
-                       "name": tool.name, 
-                       "description": tool.description, 
-                       "parameterDefinitions": tool.input_schema 
+                       "name": tool["name"], 
+                       "description": tool["description"], 
+                       "parameterDefinitions": tool["input_schema"] 
                     }
                 )  
             print( "chat_tools:" + str(chat_tools) )

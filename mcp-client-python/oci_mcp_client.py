@@ -54,8 +54,7 @@ class MCPClient:
         )
         chat_detail.chat_request = chat_request
         chat_detail.compartment_id = os.getenv("TF_VAR_compartment_ocid")
-        chat_response = generative_ai_inference_client.chat(chat_detail)
-        
+     
         if tools:
             print( "tools:" + str(tools) )
             chat_tools = []
@@ -81,8 +80,11 @@ class MCPClient:
             print( "chat_tools:" + str(chat_tools) )
             chat_request.tools = chat_tools   
 
+        print("-- chat_detail")
+        print(vars(chat_detail))
+        chat_response = generative_ai_inference_client.chat(chat_detail)
         # Print result
-        print("**************************Chat Result**************************")
+        print("-- chat_response")
         print(vars(chat_response))
         return chat_response
 

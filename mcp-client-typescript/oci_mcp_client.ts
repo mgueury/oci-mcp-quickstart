@@ -84,7 +84,7 @@ class MCPClient {
           parameterDefinitions: params,
         };
       });
-      console.log( "tools.inputSchema", JSON.stringify(this.tools) );  
+      console.log( "this.tools", JSON.stringify(this.tools) );  
       console.log(
         "Connected to server with tools:",
         this.tools.map(({ name }) => name),
@@ -174,7 +174,7 @@ class MCPClient {
         if (message.toLowerCase() === "quit") {
           break;
         }
-        console.log("\n" + response);        
+        console.log("\n" + message);        
         const response = await this.processQuery(message);
         console.log("\n" + response);
       }

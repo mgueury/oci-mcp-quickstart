@@ -106,8 +106,8 @@ class MCPClient:
         } for tool in response.tools]
 
         response = self.llm_chat(
-            messages=messages,
-            tools=available_tools
+            messages,
+            available_tools
         )
 
         # Process response and handle tool calls
@@ -136,10 +136,9 @@ class MCPClient:
                 })
 
                 # Get next response from Claude
-                response = self.anthropic.messages.create(
-                    model="claude-sonnet-4-5",
-                    max_tokens=1000,
-                    messages=messages,
+                response = self.llm_chat(
+                    messages, 
+                    None
                 )
 
                 final_text.append(response.content[0].text)

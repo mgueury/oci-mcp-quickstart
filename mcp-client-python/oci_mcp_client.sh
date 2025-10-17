@@ -1,0 +1,1 @@
+python3 oci_mcp_client.py ../python-fastmcp/mcp_add.py

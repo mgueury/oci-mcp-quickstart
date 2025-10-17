@@ -60,12 +60,22 @@ class MCPClient:
             print( "tools:" + str(tools) )
             chat_tools = []
             for tool in tools:
-               print( "tool:" + str(tool) )               
-               chat_tools.append( 
-                   { 
-                       "name": tool["name"], 
-                       "description": tool["description"], 
-                       "parameterDefinitions": tool["input_schema"] 
+                print( "tool:" + str(tool) )  
+                params = {}
+                if tool.get("input_schema"):
+                    for key, value in tool["input_schema"]["properties"].items():
+                        # Access key and value
+                        print(f"Param: {key}: {value}")
+                        params[key]= {
+                            "description": key,
+                            "type": value["type"],
+                            "isRequired": False                            
+                        }                        
+                chat_tools.append( 
+                    { 
+                        "name": tool["name"], 
+                        "description": tool["description"], 
+                        "parameterDefinitions": params 
                     }
                 )  
             print( "chat_tools:" + str(chat_tools) )

@@ -107,8 +107,7 @@ class MCPClient:
             "input_schema": tool.inputSchema
         } for tool in response.tools]
 
-        # Initial Claude API call
-        response = llm_call(
+        response = llm_chat(
             messages=messages,
             tools=available_tools
         )

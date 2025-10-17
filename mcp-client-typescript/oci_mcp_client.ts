@@ -152,13 +152,12 @@ class MCPClient {
         });
         this.debug( "result: " + JSON.stringify(result) );           
         finalText.push(`[Calling tool done]`);
-        this.debug( "result: " + JSON.stringify(result) );   
-        finalText.push(result.content);
+        finalText.push(result.content[0].text);
 
         // Continue conversation with tool results
         messages.push({
           role: "user",
-          content: result.content as string,
+          content: result.content[0].text as string,
         });
       }
     }

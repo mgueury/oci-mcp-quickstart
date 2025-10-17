@@ -37,12 +37,12 @@ class MCPClient:
             config={}, 
             service_endpoint="https://inference.generativeai."+region+".oci.oraclecloud.com", 
             retry_strategy=oci.retry.NoneRetryStrategy(), 
-            timeout=(10,240)
+            timeout=(10,240),
+            signer=signer
         )
         chat_detail = oci.generative_ai_inference.models.ChatDetails()
         chat_request = oci.generative_ai_inference.models.CohereChatRequest()
-        chat_request.message = messages
-        chat_request.tools = tools        
+        chat_request.message = messages    
         chat_request.max_tokens = 4000
         chat_request.temperature = 1
         chat_request.frequency_penalty = 0
@@ -54,6 +54,14 @@ class MCPClient:
         chat_detail.chat_request = chat_request
         chat_detail.compartment_id = os.getenv("TF_VAR_compartment_ocid")
         chat_response = generative_ai_inference_client.chat(chat_detail)
+        
+        if tools:
+            print( "tools:" + tools )
+            chat_tools = []
+            for tool in tools:
+               chat_tools.append( { name: tool.name, description: tool.description, parameterDefinitions: tool.parameters } )  
+            print( "chat_tools:" + chat_tools )
+            chat_request.tools = chat_tools   
 
         # Print result
         print("**************************Chat Result**************************")

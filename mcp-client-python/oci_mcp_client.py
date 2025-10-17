@@ -82,11 +82,11 @@ class MCPClient:
 
         print("-- chat_detail")
         print(vars(chat_detail))
-        chat_response = generative_ai_inference_client.chat(chat_detail)
+        response = generative_ai_inference_client.chat(chat_detail)
         # Print result
-        print("-- chat_response")
-        print(vars(chat_response))
-        return chat_response
+        print("-- response")
+        print(vars(response))
+        return response.chat_response
 
     async def connect_to_server(self, server_script_path: str):
         """Connect to an MCP server

@@ -1,14 +1,9 @@
-import { GenerativeAiInferenceClient, models, requests } from "oci-generativeaiinference";
-import {
-  InstancePrincipalsAuthenticationDetailsProviderBuilder,
-  NoRetryConfigurationDetails
-} from "oci-common";
-import { env } from "process";
-
-import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-import readline from "readline/promises";
+const oci_genai = require("oci-generativeaiinference");
+const oci_common = require("oci-common");
+const mcp_client = require("@modelcontextprotocol/sdk/client/index.js");
+const StdioClientTransport = require("@modelcontextprotocol/sdk/client/stdio.js");
+const StreamableHTTPClientTransport = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
+const readline = require("readline/promises");
 
 const servingMode = {
   modelId: env.TF_VAR_genai_cohere_model,
@@ -17,7 +12,7 @@ const servingMode = {
 
 class MCPClient {
   constructor() {
-    this.mcp = new Client({ name: "mcp-client-cli", version: "1.0.0" });
+    this.mcp = new mcp_client.Client();
     this.llm = null;
     this.transport = null;
     this.tools = [];
@@ -28,8 +23,8 @@ class MCPClient {
   }
 
   async initLLM() {
-    const provider = await new InstancePrincipalsAuthenticationDetailsProviderBuilder().build();
-    this.llm = new GenerativeAiInferenceClient({
+    const provider = await new oci_common.InstancePrincipalsAuthenticationDetailsProviderBuilder().build();
+    this.llm = new oci_genai.GenerativeAiInferenceClient({
       authenticationDetailsProvider: provider,
     });
     this.llm.endpoint = "https://inference.generativeai." + env.TF_VAR_region + ".oci.oraclecloud.com";
@@ -108,7 +103,7 @@ class MCPClient {
           tools: this.tools,
         }
       },
-      retryConfiguration: NoRetryConfigurationDetails
+      retryConfiguration: oci_common.NoRetryConfigurationDetails
     };
     this.debug("chatRequest: " + JSON.stringify(chatRequest));
     const response = await this.llm.chat(chatRequest);

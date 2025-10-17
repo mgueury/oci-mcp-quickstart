@@ -180,6 +180,7 @@ class MCPClient:
                     
             except Exception as e:
                 print(f"\nError: {str(e)}")
+                print(traceback.format_exc())   
     
     async def cleanup(self):
         """Clean up resources"""

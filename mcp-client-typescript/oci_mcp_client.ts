@@ -49,7 +49,7 @@ class MCPClient {
       const command = isPy
         ? process.platform === "win32"
           ? "python"
-          : "python3"
+          : "python3.12"
         : process.execPath;
 
       // Initialize transport and connect to server

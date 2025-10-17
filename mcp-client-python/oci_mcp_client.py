@@ -21,7 +21,7 @@ class MCPClient:
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
 
-    def llm_chat( messages, tools ):
+    def llm_chat( self, messages, tools ):
         # OCI Signer
         region = os.getenv("TF_VAR_region")
 
@@ -106,7 +106,6 @@ class MCPClient:
         } for tool in response.tools]
 
         response = self.llm_chat(
-            self,
             messages,
             available_tools
         )
@@ -138,7 +137,6 @@ class MCPClient:
 
                 # Get next response from Claude
                 response = self.llm_chat(
-                    self,
                     messages, 
                     None
                 )

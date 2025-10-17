@@ -21,7 +21,7 @@ class MCPClient:
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
 
-    def llm_chat( self, messages, tools ):
+    def llm_chat( self, query, chat_history, tools ):
         # OCI Signer
         region = os.getenv("TF_VAR_region")
 
@@ -42,9 +42,10 @@ class MCPClient:
         )
         chat_detail = oci.generative_ai_inference.models.ChatDetails()
         chat_request = oci.generative_ai_inference.models.CohereChatRequest()
-        chat_request.message = messages    
+        chat_request.message = query    
         chat_request.max_tokens = 4000
         chat_request.temperature = 1
+        chat_request.chat_history = chat_history
         chat_request.frequency_penalty = 0
         chat_request.top_p = 0.75
         chat_request.top_k = 0
@@ -59,7 +60,13 @@ class MCPClient:
             print( "tools:" + tools )
             chat_tools = []
             for tool in tools:
-               chat_tools.append( { name: tool.name, description: tool.description, parameterDefinitions: tool.parameters } )  
+               chat_tools.append( 
+                   { 
+                       "name": tool.name, 
+                       "description": tool.description, 
+                       "parameterDefinitions": tool.input_schema 
+                    }
+                )  
             print( "chat_tools:" + chat_tools )
             chat_request.tools = chat_tools   
 
@@ -99,13 +106,6 @@ class MCPClient:
 
     async def process_query(self, query: str) -> str:
         """Process a query using Claude and available tools"""
-        messages = [
-            {
-                "role": "user",
-                "content": query
-            }
-        ]
-
         response = await self.session.list_tools()
         available_tools = [{ 
             "name": tool.name,
@@ -113,10 +113,19 @@ class MCPClient:
             "input_schema": tool.inputSchema
         } for tool in response.tools]
 
+        chat_history = [] 
         response = self.llm_chat(
-            messages,
-            available_tools
+            messages = query,
+            chat_history = chat_history
+            tools= available_tools
         )
+        chat_history.append (
+            {
+                "role": "user",
+                "content": query
+            }
+        )
+
 
         # Process response and handle tool calls
         final_text = []
@@ -134,19 +143,20 @@ class MCPClient:
 
                 # Continue conversation with tool results
                 if hasattr(content, 'text') and content.text:
-                    messages.append({
-                      "role": "assistant",
+                    chat_history.append({
+                      "role": "CHATBOT",
                       "content": content.text
                     })
-                messages.append({
-                    "role": "user", 
+                chat_history.append({
+                    "role": "USER", 
                     "content": result.content
                 })
 
                 # Get next response from Claude
                 response = self.llm_chat(
-                    messages, 
-                    None
+                    query=result.content, 
+                    chat_history=chat_history,
+                    tools=None
                 )
 
                 final_text.append(response.content[0].text)

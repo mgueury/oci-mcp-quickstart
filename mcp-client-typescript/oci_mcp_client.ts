@@ -135,9 +135,8 @@ class MCPClient {
     // Process response and handle tool calls
     const finalText = [];
 
-    this.debug( "chatResponse.toolCalls: " + JSON.stringify(chatResponse.toolCalls) );  
     finalText.push(chatResponse.text);
-    
+
     if ( chatResponse.toolCalls ) {
       for (const toolCall of chatResponse.toolCalls) { 
         console.log(toolCall); 

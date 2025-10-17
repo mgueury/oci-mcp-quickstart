@@ -59,6 +59,7 @@ class MCPClient:
         chat_detail.chat_request = chat_request
         chat_detail.compartment_id = os.getenv("TF_VAR_compartment_ocid")
      
+        # Convert MCP Tool call to Cohere Tool Call
         if tools:
             self.debug( "tools:" + str(tools) )
             chat_tools = []

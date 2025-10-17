@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 import oci
 import os
-
+import traceback
 
 load_dotenv()  # load environment variables from .env
 

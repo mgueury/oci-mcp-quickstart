@@ -66,12 +66,22 @@ class MCPClient {
 
       console.log( "toolsResult", JSON.stringify(toolsResult) );      
       this.tools = toolsResult.tools.map((tool) => {
+        console.log( "tool.inputSchema", JSON.stringify(tool.inputSchema) );  
+        var params = tool.inputSchema.properties.map((p) => {
+            return {
+              type: p.type,
+              description: p.name,
+              isRequired: false
+            };
+        });
+        console.log( "tool.inputSchema", JSON.stringify(params) );      
         return {
           name: tool.name,
           description: tool.description,
-          parameterDefinitions: tool.inputSchema,
+          parameterDefinitions: params,
         };
       });
+      console.log( "tools.inputSchema", JSON.stringify(this.tools) );  
       console.log(
         "Connected to server with tools:",
         this.tools.map(({ name }) => name),

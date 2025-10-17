@@ -138,21 +138,18 @@ class MCPClient:
                 "content": query
             }
         )
-
-
         # Process response and handle tool calls
         final_text = []
+        final_text.append(response["text"])
 
-        for content in response.content:
-            if content.type == 'text':
-                final_text.append(content.text)
-            elif content.type == 'tool_use':
-                tool_name = content.name
-                tool_args = content.input
+        if response.get("tools_calls"):
+            for tool_call in response["tool_calls"]:
+                tool_name = tool_call.name
+                tool_args = tool_call.parameters
                 
                 # Execute tool call
-                result = await self.session.call_tool(tool_name, tool_args)
                 final_text.append(f"[Calling tool {tool_name} with args {tool_args}]")
+                result = await self.session.call_tool(tool_name, tool_args)
 
                 # Continue conversation with tool results
                 if hasattr(content, 'text') and content.text:

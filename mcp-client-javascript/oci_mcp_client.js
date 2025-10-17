@@ -6,7 +6,7 @@ const StreamableHTTPClientTransport = require("@modelcontextprotocol/sdk/client/
 const readline = require("readline/promises");
 
 const servingMode = {
-  modelId: env.TF_VAR_genai_cohere_model,
+  modelId: process.env.TF_VAR_genai_cohere_model,
   servingType: "ON_DEMAND",
 };
 
@@ -27,7 +27,7 @@ class MCPClient {
     this.llm = new oci_genai.GenerativeAiInferenceClient({
       authenticationDetailsProvider: provider,
     });
-    this.llm.endpoint = "https://inference.generativeai." + env.TF_VAR_region + ".oci.oraclecloud.com";
+    this.llm.endpoint = "https://inference.generativeai." + process.env.TF_VAR_region + ".oci.oraclecloud.com";
   }
 
   async connectToServer(serverPath) {
@@ -93,7 +93,7 @@ class MCPClient {
   async processQuery(query) {
     const chatRequest = {
       chatDetails: {
-        compartmentId: env.TF_VAR_compartment_ocid,
+        compartmentId: process.env.TF_VAR_compartment_ocid,
         servingMode: servingMode,
         chatRequest: {
           message: query,

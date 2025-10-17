@@ -135,7 +135,7 @@ class MCPClient {
     const finalText = [];
 
     finalText.push(response.text);
-    if ( response.hasAttribute("toolCalls") ) {
+    if ( response.toolCalls ) {
       for (const toolCall of response.toolCalls) { 
         console.log(toolCall); 
         // Execute tool call

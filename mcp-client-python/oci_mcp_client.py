@@ -63,7 +63,7 @@ class MCPClient:
             self.debug( "tools:" + str(tools) )
             chat_tools = []
             for tool in tools:
-                print( "tool:" + str(tool) )  
+                self.debug( "tool:" + str(tool) )  
                 params = {}
                 if tool.get("input_schema"):
                     for key, value in tool["input_schema"]["properties"].items():
@@ -81,7 +81,7 @@ class MCPClient:
                         "parameterDefinitions": params 
                     }
                 )  
-            print( "chat_tools:" + str(chat_tools) )
+            self.debug( "chat_tools:" + str(chat_tools) )
             chat_request.tools = chat_tools   
 
         self.debug( "-- chat_detail" )

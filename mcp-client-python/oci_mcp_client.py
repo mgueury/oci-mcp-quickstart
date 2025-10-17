@@ -57,7 +57,7 @@ class MCPClient:
         chat_response = generative_ai_inference_client.chat(chat_detail)
         
         if tools:
-            print( "tools:" + tools )
+            print( "tools:" + str(tools) )
             chat_tools = []
             for tool in tools:
                chat_tools.append( 
@@ -67,7 +67,7 @@ class MCPClient:
                        "parameterDefinitions": tool.input_schema 
                     }
                 )  
-            print( "chat_tools:" + chat_tools )
+            print( "chat_tools:" + str(chat_tools) )
             chat_request.tools = chat_tools   
 
         # Print result

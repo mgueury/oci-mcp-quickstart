@@ -116,7 +116,7 @@ class MCPClient:
         chat_history = [] 
         response = self.llm_chat(
             messages = query,
-            chat_history = chat_history
+            chat_history = chat_history,
             tools= available_tools
         )
         chat_history.append (

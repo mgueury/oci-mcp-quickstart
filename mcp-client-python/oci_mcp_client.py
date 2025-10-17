@@ -86,7 +86,7 @@ class MCPClient:
         # Print result
         print("-- response")
         print(vars(response))
-        return response.chat_response
+        return response.data.chat_response
 
     async def connect_to_server(self, server_script_path: str):
         """Connect to an MCP server

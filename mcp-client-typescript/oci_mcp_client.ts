@@ -67,6 +67,8 @@ class MCPClient {
       console.log( "toolsResult", JSON.stringify(toolsResult) );      
       this.tools = toolsResult.tools.map((tool) => {
         console.log( "tool.inputSchema", JSON.stringify(tool.inputSchema) );  
+        var tool_schema = tool.inputSchema.properties;
+        console.log( "tool_schema", JSON.stringify(tool_schema) );  
         var params = tool.inputSchema.properties.map((p) => {
             return {
               type: p.type,

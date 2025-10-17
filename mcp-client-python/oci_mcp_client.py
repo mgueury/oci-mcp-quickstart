@@ -21,6 +21,10 @@ class MCPClient:
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
 
+    def debug( self, s):
+        pass
+        # print( s )
+
     def llm_chat( self, query, chat_history, tools ):
         # OCI Signer
         region = os.getenv("TF_VAR_region")
@@ -56,7 +60,7 @@ class MCPClient:
         chat_detail.compartment_id = os.getenv("TF_VAR_compartment_ocid")
      
         if tools:
-            print( "tools:" + str(tools) )
+            self.debug( "tools:" + str(tools) )
             chat_tools = []
             for tool in tools:
                 print( "tool:" + str(tool) )  
@@ -80,12 +84,12 @@ class MCPClient:
             print( "chat_tools:" + str(chat_tools) )
             chat_request.tools = chat_tools   
 
-        print("-- chat_detail")
-        print(vars(chat_detail))
+        self.debug( "-- chat_detail" )
+        self.debug( vars(chat_detail) )
         response = generative_ai_inference_client.chat(chat_detail)
         # Print result
-        print("-- response")
-        print(vars(response))
+        self.debug( "-- response" )
+        self.debug( vars(response) )
         return response.data.chat_response
 
     async def connect_to_server(self, server_script_path: str):

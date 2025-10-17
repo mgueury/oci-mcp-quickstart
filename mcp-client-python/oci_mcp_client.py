@@ -142,8 +142,8 @@ class MCPClient:
         final_text = []
         final_text.append(response.text)
 
-        if response.toolsCalls:
-            for tool_call in response.toolsCalls:
+        if response.tool_calls:
+            for tool_call in response.tool_calls:
                 tool_name = tool_call.name
                 tool_args = tool_call.parameters
                 

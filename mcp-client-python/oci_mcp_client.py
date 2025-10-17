@@ -152,10 +152,10 @@ class MCPClient:
                 result = await self.session.call_tool(tool_name, tool_args)
 
                 # Continue conversation with tool results
-                if hasattr(content, 'text') and content.text:
+                if hasattr(response, 'text') and response.text:
                     chat_history.append({
                       "role": "CHATBOT",
-                      "content": content.text
+                      "content": response.text
                     })
                 chat_history.append({
                     "role": "USER", 

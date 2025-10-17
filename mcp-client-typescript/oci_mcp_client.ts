@@ -63,7 +63,8 @@ class MCPClient {
 
       // List available tools
       const toolsResult = await this.mcp.listTools();
-      var tools={};
+
+      console.log( "toolsResult", JSON.stringify(toolsResult) );      
       this.tools = toolsResult.tools.map((tool) => {
         return {
           name: tool.name,
@@ -103,13 +104,14 @@ class MCPClient {
         },
         retryConfiguration: NoRetryConfigurationDetails
     };
+    console.log( "chatRequest", JSON.stringify(chatRequest) );    
+    const response = await this.llm.chat(chatRequest);
     const messages: Object[] = [
       {
         role: "user",
         content: query,
       },
     ];    
-    const response = await this.llm.chat(chatRequest);
 
     // Process response and handle tool calls
     const finalText = [];

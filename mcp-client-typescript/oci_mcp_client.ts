@@ -153,6 +153,7 @@ class MCPClient {
         this.debug( "result: " + JSON.stringify(result) );           
         finalText.push(`[Calling tool done]`);
         finalText.push(result.content[0].text);
+        this.debug( "result: " + result.content[0].text );    
 
         // Continue conversation with tool results
         messages.push({

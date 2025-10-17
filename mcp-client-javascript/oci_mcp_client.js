@@ -12,7 +12,7 @@ const servingMode = {
 
 class MCPClient {
   constructor() {
-    this.mcp = new mcp_client.Client();
+    this.mcp = new mcp_client.Client({ name: "mcp-client-cli", version: "1.0.0" });
     this.llm = null;
     this.transport = null;
     this.tools = [];

@@ -21,11 +21,9 @@ class MCPClient:
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
 
-    def llm_chat(messages, tools):
+    def llm_chat( messages, tools ):
         # OCI Signer
         region = os.getenv("TF_VAR_region")
-        endpoint = "https://inference.generativeai.."+region+".oci.oraclecloud.com"
-        model = os.getenv("TF_VAR_genai_cohere_model")
 
         # #Tool definitions
         # tool1 = CohereTool()
@@ -37,7 +35,7 @@ class MCPClient:
 
         generative_ai_inference_client = oci.generative_ai_inference.GenerativeAiInferenceClient(
             config={}, 
-            service_endpoint=endpoint, 
+            service_endpoint="https://inference.generativeai."+region+".oci.oraclecloud.com", 
             retry_strategy=oci.retry.NoneRetryStrategy(), 
             timeout=(10,240)
         )

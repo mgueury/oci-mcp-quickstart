@@ -60,10 +60,7 @@ class MCPClient {
         await new Promise(r => setTimeout(r, 2000));
     }
 
-    async getTools() {
-        this.toolsMCP = await this.mcp.listTools();
-
-        this.debug("this.toolsMCP " + JSON.stringify(this.toolsMCP));
+    getToolCohere() {
         this.toolsCohere = this.toolsMCP.tools.map((tool) => {
             this.debug("tool.inputSchema: " + JSON.stringify(tool.inputSchema));
             var tool_schema = tool.inputSchema.properties;
@@ -88,6 +85,11 @@ class MCPClient {
             "Connected to server with toolsMCP:",
             this.toolsCohere.map(({ name }) => name),
         );
+    }
+
+    async getToolsMCP() {
+        this.toolsMCP = await this.mcp.listTools();
+        this.debug("this.toolsMCP " + JSON.stringify(this.toolsMCP));
     }
 
     async callTool(tool) {
@@ -189,7 +191,8 @@ class MCPClient {
         try {
             await this.initLLM();
             await this.connectToServer(process.argv[2]);
-            await this.getTools();
+            await this.getToolsMCP();
+            this.getToolCohere();
             await this.chatLoop();
         } finally {
             await this.cleanup();

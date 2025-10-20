@@ -5,6 +5,8 @@ const stdio = require("@modelcontextprotocol/sdk/client/stdio.js");
 const streamableHttp = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
 const readline = require("readline/promises");
 
+export { MCPClient };
+
 const servingMode = {
     modelId: process.env.TF_VAR_genai_cohere_model,
     servingType: "ON_DEMAND",
@@ -194,5 +196,3 @@ class MCPClient {
     }
 }
 
-const mcpClient = new MCPClient();
-mcpClient.main();

@@ -1,5 +1,5 @@
 {
-  "name": "mcp-client-typescript",
+  "name": "mcp-client-javascript",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

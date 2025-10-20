@@ -1,11 +1,9 @@
-const oci_genai = require("oci-generativeaiinference");
+const oci_genai = import("oci-generativeaiinference");
 const oci_common = require("oci-common");
 const mcp_client = require("@modelcontextprotocol/sdk/client/index.js");
 const stdio = require("@modelcontextprotocol/sdk/client/stdio.js");
 const streamableHttp = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
 const readline = require("readline/promises");
-
-export { MCPClient };
 
 const servingMode = {
     modelId: process.env.TF_VAR_genai_cohere_model,

@@ -15,7 +15,8 @@ class MCPClient {
         this.mcp = new mcp_client.Client({ name: "mcp-client-cli", version: "1.0.0" });
         this.llm = null;
         this.transport = null;
-        this.tools = [];
+        this.toolsCohere = [];
+        this.toolsMCP = [];
     }
 
     debug(s) {
@@ -60,10 +61,10 @@ class MCPClient {
     }
 
     async getTools() {
-        const toolsResult = await this.mcp.listTools();
+        this.toolsMCP = await this.mcp.listTools();
 
-        this.debug("toolsResult " + JSON.stringify(toolsResult));
-        this.tools = toolsResult.tools.map((tool) => {
+        this.debug("this.toolsMCP " + JSON.stringify(this.toolsMCP));
+        this.toolsCohere = this.toolsMCP.tools.map((tool) => {
             this.debug("tool.inputSchema: " + JSON.stringify(tool.inputSchema));
             var tool_schema = tool.inputSchema.properties;
             this.debug("tool_schema: " + JSON.stringify(tool_schema));
@@ -82,10 +83,10 @@ class MCPClient {
                 parameterDefinitions: params,
             };
         });
-        this.debug("this.tools: " + JSON.stringify(this.tools));
+        this.debug("this.toolsCohere: " + JSON.stringify(this.toolsCohere));
         console.log(
-            "Connected to server with tools:",
-            this.tools.map(({ name }) => name),
+            "Connected to server with toolsMCP:",
+            this.toolsMCP.map(({ name }) => name),
         );
     }
 
@@ -108,7 +109,7 @@ class MCPClient {
                     apiFormat: "COHERE",
                     maxTokens: 2000,
                     temperature: 0,
-                    tools: this.tools,
+                    tools: this.toolsCohere,
                 }
             },
             retryConfiguration: oci_common.NoRetryConfigurationDetails

@@ -1,4 +1,4 @@
-import oci_genai = require("oci-generativeaiinference");
+const oci_genai = require("oci-generativeaiinference");
 const oci_common = require("oci-common");
 const mcp_client = require("@modelcontextprotocol/sdk/client/index.js");
 const stdio = require("@modelcontextprotocol/sdk/client/stdio.js");

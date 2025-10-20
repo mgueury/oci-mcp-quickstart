@@ -193,6 +193,3 @@ class MCPClient {
         }
     }
 }
-
-const mcpClient = new MCPClient();
-mcpClient.main();

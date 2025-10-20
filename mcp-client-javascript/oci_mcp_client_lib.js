@@ -89,6 +89,15 @@ class MCPClient {
         );
     }
 
+    async callTool(tool) {
+        const result = await this.mcp.callTool({
+            name: tool.name,
+            arguments: tool.parameters,
+        });
+        this.debug("result: " + JSON.stringify(result));
+        return result;
+    }
+
     async processQuery(query) {
         const chatRequest = {
             chatDetails: {
@@ -121,17 +130,11 @@ class MCPClient {
 
         if (chatResponse.toolCalls) {
             for (const toolCall of chatResponse.toolCalls) {
-                console.log(toolCall);
-                const toolName = toolCall.name;
-                const toolArgs = toolCall.parameters;
+                this.debug(toolCall);
                 finalText.push(
-                    `[Calling tool ${toolName} with args ${JSON.stringify(toolArgs)}]`,
+                    `[Calling tool ${toolCall.name} with args ${JSON.stringify(toolCall.parameters)}]`,
                 );
-                const result = await this.mcp.callTool({
-                    name: toolName,
-                    arguments: toolArgs,
-                });
-                this.debug("result: " + JSON.stringify(result));
+                const result = await this.callTool( toolCall );
                 finalText.push(`[Calling tool done]`);
                 finalText.push(result.content[0].text);
                 this.debug("result: " + result.content[0].text);

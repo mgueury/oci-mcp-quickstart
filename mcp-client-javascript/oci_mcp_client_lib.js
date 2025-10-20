@@ -66,6 +66,7 @@ class MCPClient {
             this.toolsMCP.push( tool );
         });
         this.debug("this.toolsMCP: " + JSON.stringify(this.toolsMCP));
+        this.getToolsCohere();
     }
 
     getToolsCohere() {
@@ -103,6 +104,7 @@ class MCPClient {
     async getToolsMCP() {
         this.toolsMCP = await this.mcp.listTools();
         this.debug("this.toolsMCP " + JSON.stringify(this.toolsMCP));
+        this.getToolsCohere();
     }
 
     async callTool(tool) {
@@ -115,9 +117,6 @@ class MCPClient {
     }
 
     async processQuery(query) {
-        if( ! this.toolsCohere ) {
-            this.getToolsCohere();
-        }
         const chatRequest = {
             chatDetails: {
                 compartmentId: process.env.TF_VAR_compartment_ocid,

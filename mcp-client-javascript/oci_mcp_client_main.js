@@ -1,4 +1,4 @@
-import { MCPClient } from './oci_mcp_client_lib.js';
+const mcp_client = require('./oci_mcp_client_lib.js');
 
-const mcpClient = new MCPClient();
+const mcpClient = new mcp_client.MCPClient();
 mcpClient.main();

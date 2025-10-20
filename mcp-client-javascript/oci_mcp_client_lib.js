@@ -1,9 +1,17 @@
-const oci_genai = require("oci-generativeaiinference");
-const oci_common = require("oci-common");
-const mcp_client = require("@modelcontextprotocol/sdk/client/index.js");
-const stdio = require("@modelcontextprotocol/sdk/client/stdio.js");
-const streamableHttp = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
-const readline = require("readline/promises");
+// const oci_genai = require("oci-generativeaiinference");
+// const oci_common = require("oci-common");
+// const mcp_client = require("@modelcontextprotocol/sdk/client/index.js");
+// const stdio = require("@modelcontextprotocol/sdk/client/stdio.js");
+// const streamableHttp = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
+// const readline = require("readline/promises");
+
+import oci_genai from "oci-generativeaiinference";
+import oci_common from "oci-common";
+
+import mcp_client from "@modelcontextprotocol/sdk/client/index.js";
+import stdio from "@modelcontextprotocol/sdk/client/stdio.js";
+import streamableHttp from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+import readline from "readline/promises";
 
 const servingMode = {
     modelId: process.env.TF_VAR_genai_cohere_model,

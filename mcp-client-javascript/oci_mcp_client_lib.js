@@ -10,7 +10,7 @@ const servingMode = {
     servingType: "ON_DEMAND",
 };
 
-class MCPClient {
+export class MCPClient {
     constructor() {
         this.mcp = new mcp_client.Client({ name: "mcp-client-cli", version: "1.0.0" });
         this.llm = null;

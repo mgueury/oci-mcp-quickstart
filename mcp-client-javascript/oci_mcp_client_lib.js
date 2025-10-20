@@ -198,6 +198,9 @@ class MCPClient {
             await this.getToolsMCP();
             this.getToolCohere();
             await this.chatLoop();
+        } catch( e ) {
+            console.log( "Exception: " + e );
+            console.log( e.stack );
         } finally {
             await this.cleanup();
             process.exit(0);

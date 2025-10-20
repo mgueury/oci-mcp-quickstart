@@ -74,8 +74,8 @@ class MCPClient {
                 }
             });
             // Required
-            this.debug("tool_schema.required: " + JSON.stringify(tool_schema.required));
-            tool_schema.required.forEach( function (key, index) {
+            this.debug("tool.inputSchema.required: " + JSON.stringify(tool.inputSchema.required));
+            tool.inputSchema.required.forEach( function (key, index) {
                 params[key].isRequired = true;
             });
             this.debug("params: " + JSON.stringify(params));

@@ -74,9 +74,10 @@ class MCPClient {
                 }
             });
             // Required
-            for (const key of tool_schema.required) {
+            this.debug("tool_schema.required: " + JSON.stringify(tool_schema.required));
+            tool_schema.required.forEach( function (key, index) {
                 params[key].isRequired = true;
-            }
+            });
             this.debug("params: " + JSON.stringify(params));
             return {
                 name: tool.name,

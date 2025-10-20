@@ -86,7 +86,7 @@ class MCPClient {
         this.debug("this.toolsCohere: " + JSON.stringify(this.toolsCohere));
         console.log(
             "Connected to server with toolsMCP:",
-            this.toolsMCP.map(({ name }) => name),
+            this.toolsCohere.map(({ name }) => name),
         );
     }
 

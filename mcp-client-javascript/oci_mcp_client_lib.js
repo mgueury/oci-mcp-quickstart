@@ -73,7 +73,11 @@ class MCPClient {
                     isRequired: false
                 }
             });
-            this.debug("tool.inputSchema " + JSON.stringify(params));
+            // Required
+            for (const key of tool_schema.required) {
+                params[key].isRequired = true;
+            }
+            this.debug("params: " + JSON.stringify(params));
             return {
                 name: tool.name,
                 description: tool.description,

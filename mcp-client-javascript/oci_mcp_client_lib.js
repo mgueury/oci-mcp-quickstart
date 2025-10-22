@@ -60,16 +60,29 @@ class MCPClient {
         await new Promise(r => setTimeout(r, 2000));
     }
 
-    addToolsLocal( toolsLocal ) {
+    addLocal2ToolsMCP( toolsLocal ) {
         toolsLocal.tools.map((tool) => {
             tool.name = "local_" + tool.name;
             this.toolsMCP.push( tool );
         });
         this.debug("this.toolsMCP: " + JSON.stringify(this.toolsMCP));
-        this.getToolsCohere();
+        this.convertToolsMCP2Cohere();
     }
 
-    getToolsCohere() {
+    addOdaTool2Cohere( tool ) {
+        t = {}
+        t.name = "local_" + tool.name 
+        if ( tool.description ) {
+          t.description = tool.description 
+        }
+        if ( tool.parameters ) {
+          t.parameterDefinitions = tool.parameters 
+        }
+        this.toolsCohere.push( t );
+        this.debug("this.toolsCohere: " + JSON.stringify(this.toolsCohere));
+    }
+
+    convertToolsMCP2Cohere() {
         this.toolsCohere = this.toolsMCP.tools.map((tool) => {
             this.debug("tool.inputSchema: " + JSON.stringify(tool.inputSchema));
             var tool_schema = tool.inputSchema.properties;
@@ -101,10 +114,10 @@ class MCPClient {
         );
     }
 
-    async getToolsMCP() {
+    async listTools() {
         this.toolsMCP = await this.mcp.listTools();
         this.debug("this.toolsMCP " + JSON.stringify(this.toolsMCP));
-        this.getToolsCohere();
+        this.convertToolsMCP2Cohere();
     }
 
     async callTool(tool) {
@@ -208,7 +221,7 @@ class MCPClient {
         try {
             await this.initLLM();
             await this.connectToServer(process.argv[2]);
-            await this.getToolsMCP();
+            await this.listTools();
             await this.chatLoop();
         } catch( e ) {
             console.log( "Exception: " + e );
@@ -221,3 +234,88 @@ class MCPClient {
 }
 
 module.exports = MCPClient;
+
+/*
+ODA Tools Format
+----------------
+[
+  { 
+    "name": "mcp",
+    "description", "http://www.mcp.com/"
+    "parameters" : {
+       "cache": true 
+    }
+  },
+  { "name", "hello",
+    "description": "answer to hello, hi"
+  },
+  { "name": "weather",
+    "description": "get the weather in a city and the cloth recommendation",
+    "parameters" : {
+       "city":{"description": "name of the city","isRequired":true }
+    }
+  }
+]
+
+MCP Tools Format
+----------------
+{
+    "tools": [
+        {
+            "name": "add",
+            "description": "Add two numbers",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "integer"
+                    },
+                    "b": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "result"
+                ],
+                "x-fastmcp-wrap-result": true
+            },
+            "_meta": {
+                "_fastmcp": {
+                    "tags": []
+                }
+            }
+        }
+    ]
+}
+
+Cohere Tools Format
+-------------------
+[
+    {
+        "name": "add",
+        "description": "Add two numbers",
+        "parameterDefinitions": {
+            "a": {
+                "type": "integer",
+                "isRequired": true
+            },
+            "b": {
+                "type": "integer",
+                "isRequired": true
+            }
+        }
+    }
+]
+*/

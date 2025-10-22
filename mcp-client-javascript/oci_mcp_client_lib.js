@@ -55,9 +55,9 @@ class MCPClient {
                 command,
                 args: [serverPath],
             });
+            this.debug("this.transport: " + JSON.stringify(this.transport));
             await this.mcp.connect(this.transport);
         }
-        this.debug("before ListTools");
         await new Promise(r => setTimeout(r, 2000));
     }
 

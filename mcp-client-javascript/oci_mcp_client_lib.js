@@ -12,7 +12,7 @@ const servingMode = {
 
 class MCPClient {
     constructor() {
-        this.mcp = new mcp_client.Client({ name: "mcp-client-cli", version: "1.0.0" });
+        this.mcp = null;
         this.llm = null;
         this.transport = null;
         this.toolsCohere = [];
@@ -32,6 +32,7 @@ class MCPClient {
     }
 
     async connectToServer(serverPath) {
+        this.mcp = new mcp_client.Client({ name: "mcp-client-cli", version: "1.0.0" });
         if (serverPath.startsWith('http')) {
             this.debug("streamableHTTP");
             const url = new URL(serverPath);
@@ -70,7 +71,7 @@ class MCPClient {
     }
 
     addOdaTool2Cohere( tool ) {
-        t = {}
+        var t = {}
         t.name = "local_" + tool.name 
         if ( tool.description ) {
           t.description = tool.description 
@@ -210,7 +211,9 @@ class MCPClient {
     }
 
     async cleanup() {
-        await this.mcp.close();
+        if( this.mcp ) {
+            await this.mcp.close();
+        }
     }
 
     async main() {

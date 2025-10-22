@@ -84,7 +84,7 @@ class MCPClient {
     }
 
     convertToolsMCP2Cohere() {
-        this.toolsCohere = this.toolsMCP.tools.map((tool) => {
+        this.toolsMCP.tools.forEach((tool) => {
             this.debug("tool.inputSchema: " + JSON.stringify(tool.inputSchema));
             var tool_schema = tool.inputSchema.properties;
             this.debug("tool_schema: " + JSON.stringify(tool_schema));
@@ -102,11 +102,11 @@ class MCPClient {
                 params[key].isRequired = true;
             });
             this.debug("params: " + JSON.stringify(params));
-            return {
+            this.toolsCohere.push({
                 name: tool.name,
                 description: tool.description,
                 parameterDefinitions: params,
-            };
+            });
         });
         this.debug("this.toolsCohere: " + JSON.stringify(this.toolsCohere));
         console.log(

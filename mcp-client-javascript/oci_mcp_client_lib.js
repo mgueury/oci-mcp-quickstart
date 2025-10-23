@@ -110,6 +110,9 @@ class MCPClient {
                 params[key].isRequired = true;
             });
             this.debug("params: " + JSON.stringify(params));
+            if( !tool.description ) {
+                tool.description = tool.name;
+            }
             return {
                 name: tool.name,
                 description: tool.description,

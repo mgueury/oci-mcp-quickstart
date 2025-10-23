@@ -77,13 +77,13 @@ class MCPClient {
     }
 
     addOdaTool2Cohere( tool ) {
-        var t = {}
-        t.name = "local_" + tool.name 
+        var t = {};
+        t.name = "local_" + tool.name; 
         if ( tool.description ) {
-          t.description = tool.description 
+          t.description = tool.description; 
         }
         if ( tool.parameters ) {
-          t.parameterDefinitions = tool.parameters 
+          t.parameterDefinitions = tool.parameters;
         }
         this.toolsCohere.push( t );
         this.debug("this.toolsCohere: " + JSON.stringify(this.toolsCohere));
@@ -136,7 +136,7 @@ class MCPClient {
         return result;
     }
 
-    async processQuery(query) {
+    async LlmChatCallTool(query) {
         const chatRequest = {
             chatDetails: {
                 compartmentId: this.config.compartment_ocid,
@@ -205,7 +205,7 @@ class MCPClient {
                     break;
                 }
                 console.log("\n" + message);
-                const [res_type, response] = await this.processQuery(message);
+                const [res_type, response] = await this.LlmChatCallTool(message);
                 console.log("\n" + response);
             }
         } catch (e) {
@@ -250,18 +250,18 @@ ODA Tools Format
 [
   { 
     "name": "mcp",
-    "description", "http://www.mcp.com/"
+    "description": "/home/opc/oci-mcp-quickstart/python-fastmcp/mcp_add.py",
     "parameters" : {
        "cache": true 
     }
   },
-  { "name", "hello",
+  { "name": "hello",
     "description": "answer to hello, hi"
   },
   { "name": "weather",
     "description": "get the weather in a city and the cloth recommendation",
     "parameters" : {
-       "city":{"description": "name of the city","isRequired":true }
+       "city":{"description": "name of the city", "type": "string", "isRequired":true }
     }
   }
 ]

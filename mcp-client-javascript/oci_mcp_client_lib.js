@@ -81,6 +81,8 @@ class MCPClient {
         t.name = "local_" + tool.name; 
         if ( tool.description ) {
           t.description = tool.description; 
+        } else {
+          t.description = tool.name;  
         }
         if ( tool.parameters ) {
           t.parameterDefinitions = tool.parameters;
